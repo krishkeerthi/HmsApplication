@@ -13,16 +13,15 @@ fun listCases(){
 }
 
 private fun showCase(caseId: String){
-    val case = HmsRepository.getCase(caseId)
+    when(val caseResult = HmsRepository.getCase(caseId)){
+        is Success ->{
+            val case = caseResult.value
+            println("Case id   |  Patient id  |  First visit  |  Last Visit")
+            println("${case.caseId}  ${case.patientId}  ${case.firstVisit}  ${case.lastVisit}")
 
-    if(case == null){
-        println("Case does not exist")
-    }
-    else{
-        println("Case id   |  Patient id  |  First visit  |  Last Visit")
-        println("${case.caseId}  ${case.patientId}  ${case.firstVisit}  ${case.lastVisit}")
-
-        showConsultations(case.caseId)
+            showConsultations(case.caseId)
+       }
+        is Failure -> println(caseResult.reason.message)
     }
 }
 
@@ -39,17 +38,16 @@ private fun showConsultations(caseId: String){
 }
 
 private fun showConsultation(consultationId: String){
-    val consultation = HmsRepository.getConsultation(consultationId)
+    when(val consultationResult = HmsRepository.getConsultation(consultationId)){
+        is Success ->{
+            val consultation = consultationResult.value
+            println("Consultation id   |  Doctor id   |  Department   | Issue   |  Visit date |  Assessment")
+            println("${consultation.consultationId} ${consultation.doctorId} ${consultation.department.name.lowercase()} " +
+                    "${consultation.issue} ${consultation.visitDate}  ${consultation.assessment}")
 
-    if(consultation == null){
-        println("Consultation does not exist")
-    }
-    else{
-        println("Consultation id   |  Doctor id   |  Department   | Issue   |  Visit date |  Assessment")
-        println("${consultation.consultationId} ${consultation.doctorId} ${consultation.department.name.lowercase()} " +
-                "${consultation.issue} ${consultation.visitDate}  ${consultation.assessment}")
-
-        showMedicines(consultation.consultationId)
+            showMedicines(consultation.consultationId)
+        }
+        is Failure -> println(consultationResult.reason.message)
     }
 }
 
@@ -67,12 +65,13 @@ private fun showMedicines(consultationId: String){
 }
 
 private fun showMedicine(medicineId: String){
-    val medicine = HmsRepository.getMedicine(medicineId)
 
-    if(medicine == null)
-        println("Medicine does not exist")
-    else{
-        println("${medicine.medicineName}  ${medicine.medicineType.name.lowercase()} " +
-        "${medicine.count} ${medicine.days} ${medicine.morning}  ${medicine.afternoon}  ${medicine.night}")
+    when(val medicineResult = HmsRepository.getMedicine(medicineId)){
+        is Success ->{
+            val medicine = medicineResult.value
+            println("${medicine.medicineName}  ${medicine.medicineType.name.lowercase()} " +
+                    "${medicine.count} ${medicine.days} ${medicine.morning}  ${medicine.afternoon}  ${medicine.night}")
+        }
+        is Failure -> println(medicineResult.reason.message)
     }
 }

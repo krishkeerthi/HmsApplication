@@ -14,7 +14,7 @@ fun main() {
 
             Modules.REGISTERCASE -> registerCase()
 
-            Modules.`HANDLE CONSULTATION` -> handleConsultation()
+            Modules.HANDLECONSULTATION -> handleConsultation()
 
             Modules.LISTDOCTORS -> listDoctors()
 

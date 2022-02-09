@@ -13,9 +13,7 @@ import com.krish.hms.library.repository.Success
 fun addPatient(){
     val patient = readPatient()
 
-    val result = HmsRepository.addPatient(patient)
-
-    when(result){
+    when(val result = HmsRepository.addPatient(patient)){
         is Success -> {
             println(result.value)
         }
@@ -28,7 +26,6 @@ fun addPatient(){
 
 private fun readPatient(): Patient {
     val name = readName()
-    val age = readAge()
     val gender = readGender()
     val dob = readDOB()
     val address = readAddress()
@@ -37,7 +34,7 @@ private fun readPatient(): Patient {
     val ssn = readSsn()
     val patientId = generateId(IdHolder.PATIENT)
 
-    return Patient(name, age, gender, dob, address,
+    return Patient(name, gender, dob, address,
         contact, bloodGroup, ssn, patientId, getToday(),
         getToday())
 }

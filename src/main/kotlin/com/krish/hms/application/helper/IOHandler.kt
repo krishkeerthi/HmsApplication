@@ -24,20 +24,20 @@ private fun readInt(field: String): Int{
         println("$field must contains integers only! Re-enter $field:")
         input = readLine()
     }
-    return input!!.toIntOrNull()!!
+    return input.toIntOrNull()!!
 }
 
 private fun readDate(field: String): LocalDate{
-    var date = readString("$field").toDateOrNull()
+    var date = readString(field).toDateOrNull()
     while(date == null){
         println("Invalid Date")
         date = readString("valid $field").toDateOrNull()
     }
-    return date!!
+    return date
 }
 
 private fun readBoolean(field: String): Boolean{
-    val choice = readString("$field").trim().lowercase()
+    val choice = readString(field).trim().lowercase()
     if(choice == "yes")
         return true
     else if(choice == "no")
@@ -97,8 +97,6 @@ private fun <T> readOptions(options: Array<T>): Int{
 
 fun readName() = readString("name")
 
-fun readAge() = readInt("age")
-
 fun readExperience() = readInt("experience")
 
 fun readDOB() = readDate("Date of Birth(dd-mm-yyyy)")
@@ -154,3 +152,4 @@ fun readPatientId() = readString("patient id")
 fun readDoctorSelection() = getDoctorSelection(readOptions(DoctorSelection.values()))
 
 fun readPatientSelection() = getPatientSelection(readOptions(PatientSelection.values()))
+

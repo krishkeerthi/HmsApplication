@@ -8,10 +8,13 @@ version '1.0-SNAPSHOT'
 repositories {
     mavenLocal()
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
     implementation "com.krish:HmsLibrary:1.0-SNAPSHOT"
     implementation "io.konform:konform-jvm:0.3.0"
+    implementation "com.github.kotlin-inquirer:kotlin-inquirer:0.1.0"
+    implementation 'com.github.holgerbrandl:kscript-annotations:1.4'
 }

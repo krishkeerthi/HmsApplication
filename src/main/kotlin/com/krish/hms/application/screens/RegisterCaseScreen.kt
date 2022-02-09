@@ -31,12 +31,14 @@ private fun getOrCreateCase(ssn: Int): Case?{
     val newCase = isNewCase()
 
     if(newCase){
-        val case = HmsRepository.createNewCase(ssn)
-        return if(case == null){
-            println("Patient does not exist, register patient first")
-            null
-        } else
-            case
+        return when(val caseResult = HmsRepository.createNewCase(ssn)){
+            is Success -> caseResult.value
+            is Failure -> {
+                println(caseResult.reason.message)
+                null
+            }
+        }
+
     }
     else{
         val caseId = readCaseId()
@@ -46,13 +48,13 @@ private fun getOrCreateCase(ssn: Int): Case?{
             return null
         }
 
-        val case = HmsRepository.getCase(caseId)
-
-        return if(case == null){
-            println("Case id does not exists")
-            null
-        } else
-            case
+        return when(val caseResult = HmsRepository.getCase(caseId)){
+            is Success -> caseResult.value
+            is Failure -> {
+                println(caseResult.reason.message)
+                null
+            }
+        }
     }
 }
 
